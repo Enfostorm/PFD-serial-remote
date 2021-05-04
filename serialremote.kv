@@ -1,0 +1,30 @@
+#: kivy 2.0.0
+
+<ValueSlider>:
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+        pos: root.pos
+
+        Slider:
+            id: slider
+            orientation: 'vertical'
+            min: root.min_val
+            max: root.max_val
+            size_hint_y: 8
+
+        Label:
+            size_hint_y: 1
+            font_size: root.height/50
+            text: f'{root.role}\nrange {root.min_val}, {root.max_val}'
+            halign: 'center'
+
+<HandshakeButton>:
+    Button:
+        id: butt
+        pos: root.pos
+        size: root.size
+        on_press: app.serialWrite('DEVICE\n')
+
+<SliderStack>:
+    orientation: 'horizontal'
