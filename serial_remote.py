@@ -88,7 +88,7 @@ class SerialRemoteApp(App):
         r.add_widget(self.handshakeButton)
 
         self.openPort()
-        Clock.schedule_interval(self.serialWriteValues, 1/60)
+        Clock.schedule_interval(self.serialWriteValues, 1/50)
         threading.Thread(target=self.serialReadValuesThread, daemon=True).start()       # Daemon = True so thread closes when the main process closes
         return r
 
@@ -176,7 +176,7 @@ class SerialRemoteApp(App):
                 print(f'Found port {p.device}')
                 return p.device
 
-        print(f'No ports automatically found, falling back to /dev/ttyS0, or trying again in 2s')   # Prints if no keyword has been found
+        print(f'No ports automatically found, falling back to /dev/ttyS0, or trying again in 2s')   # Prints if no device with keyword has been found
         return '/dev/ttyS0'
 
     def roundedStr(self, number, afterComma):
