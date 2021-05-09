@@ -56,7 +56,6 @@ class SerialRemoteApp(App):
 
         self.headingRateSlider = ValueSlider(min_val = -20, max_val = 20, role = 'Heading Rate')
         self.vSpeedSlider = ValueSlider(min_val = -20, max_val = 20, role = 'Vertical Speed')
-        self.deltaSpeedSlider = ValueSlider(min_val = -20, max_val = 20, role = 'Acceleration Rate')
 
         self.headingBugSlider = ValueSlider(min_val = 0, max_val = 360, role = 'Heading Bug')
         self.altBugSlider = ValueSlider(min_val = 0, max_val = 50000, role = 'Altitude Bug')
@@ -82,7 +81,6 @@ class SerialRemoteApp(App):
         r.add_widget(self.speedSlider)
         r.add_widget(self.headingRateSlider)
         r.add_widget(self.vSpeedSlider)
-        r.add_widget(self.deltaSpeedSlider)
         r.add_widget(self.bugLayout)
         r.add_widget(self.groundTrackSlider)
         r.add_widget(self.handshakeButton)
@@ -114,7 +112,6 @@ class SerialRemoteApp(App):
 
         headingRate = self.headingRateSlider.ids.slider.value
         vSpeed = self.vSpeedSlider.ids.slider.value
-        deltaSpeed = self.deltaSpeedSlider.ids.slider.value
 
         headingBug = self.headingBugSlider.ids.slider.value
         altBug = self.altBugSlider.ids.slider.value
@@ -123,7 +120,7 @@ class SerialRemoteApp(App):
 
         groundTrack = self.groundTrackSlider.ids.slider.value
 
-        valueList = [pitch, roll, slip, heading, altitude, speed, headingRate, vSpeed, deltaSpeed, headingBug, altBug, spdBug, vsiBug, groundTrack]
+        valueList = [pitch, roll, slip, heading, altitude, speed, headingRate, vSpeed, headingBug, altBug, spdBug, vsiBug, groundTrack]
         
         try:
             self.ser.write(self.strForSerialOut(valueList).encode())
@@ -185,6 +182,8 @@ class SerialRemoteApp(App):
 
     def strForSerialOut(self, valueList):
         strVariables = [self.roundedStr(element, 4) for element in valueList]
+        strVariables.append('ft')
+        strVariables.append('kts')
         dataString = ';'.join(strVariables)
         stringToWrite = dataString + '\n'
         # print(stringToWrite)
