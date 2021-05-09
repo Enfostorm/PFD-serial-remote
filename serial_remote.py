@@ -185,7 +185,7 @@ class SerialRemoteApp(App):
         strVariables.append('ft')
         strVariables.append('kts')
         dataString = ';'.join(strVariables)
-        stringToWrite = dataString + '\n'
+        stringToWrite = dataString + ';\n'
         # print(stringToWrite)
         return stringToWrite
 
